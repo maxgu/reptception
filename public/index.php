@@ -17,6 +17,7 @@ include '../vendor/autoload.php';
 use Phlyty\App;
 use Reptception\ErrorHandler;
 use Reptception\PhpView;
+use Reptception\Controller;
 
 $app = new App();
 
@@ -28,7 +29,11 @@ $app->events()->attach('501', $errorHandler);
 $app->setView(new PhpView());
 
 $app->get('/', function(App $app){
-    $app->render('index');
+    
+    $controller = new Controller();
+    $viewModel = $controller->indexAction(include '../Reptception/config.php');
+    
+    $app->render('index', $viewModel);
 });
 
 $app->run();

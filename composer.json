@@ -10,9 +10,13 @@
         "zendframework/zend-view": "2.*",
         "zendframework/zend-filter": "2.*"
     },
+    "require-dev": {
+        "codeception/aspect-mock": "*"
+    },
     "autoload": {
         "psr-0": {
-            "Reptception":  "."
+            "Reptception":  ".",
+            "ReptceptionTest":  "/tests"
         }
     }
 }
