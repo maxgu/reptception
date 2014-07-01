@@ -3,28 +3,36 @@
 namespace ReptceptionTest;
 
 use AspectMock\Test as test;
-use Reptception\ConfigValidator;
+use Reptception\Validator\Config as ConfigValidator;
 
 class ConfigValidatorTest extends \PHPUnit_Framework_TestCase {
     
+    /**
+     *
+     * @var ConfigValidator 
+     */
+    private $validator;
+    
+    protected function setUp() {
+        $this->validator = new ConfigValidator();
+    }
+
     protected function tearDown() {
         test::clean();
     }
 
     public function testIsValidThrowsExceptionIfConfigDoesNotExists() {
-        $validator = new ConfigValidator('/path/to/config.php');
         
         $this->setExpectedException('RuntimeException');
         
-        $validator->isValid();
+        $this->validator->isValid('/path/to/config.php');
         
     }
     
     public function testIsValidThrowsExceptionIfConfigNotContainProjectKey() {
-        $validator = new ConfigValidator('/path/to/config.php');
         
-        $validatorStatic = test::double(
-            'Reptception\ConfigValidator', 
+        $validator = test::double(
+            'Reptception\Validator\Config', 
             [
                 'fileExists' => true,
                 'loadConfig' => []
@@ -33,7 +41,7 @@ class ConfigValidatorTest extends \PHPUnit_Framework_TestCase {
         
         $this->setExpectedException('RuntimeException');
         
-        $validator->isValid();
+        $this->validator->isValid('/path/to/config.php');
         
     }
     
@@ -43,23 +51,21 @@ class ConfigValidatorTest extends \PHPUnit_Framework_TestCase {
         
         $config = ['projects' => []];
         
-        $validatorStatic = test::double(
-            'Reptception\ConfigValidator', 
+        $validator = test::double(
+            'Reptception\Validator\Config', 
             [
                 'fileExists' => true,
                 'loadConfig' => $config
             ]
         );
         
-        $validator = new ConfigValidator($path);
+        $result = $this->validator->isValid($path);
         
-        $result = $validator->isValid();
-        
-        $validatorStatic->verifyInvoked('fileExists', [$path]); 
-        $validatorStatic->verifyInvoked('loadConfig', [$path]); 
+        $validator->verifyInvoked('fileExists', [$path]); 
+        $validator->verifyInvoked('loadConfig', [$path]); 
         $this->assertTrue($result);
-        $this->assertAttributeEquals($config, 'config', $validator);
-        $this->assertEquals($config, $validator->getConfig());
+        $this->assertAttributeEquals($config, 'config', $this->validator);
+        $this->assertEquals($config, $this->validator->getConfig());
     }
     
 }

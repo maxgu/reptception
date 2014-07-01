@@ -8,26 +8,21 @@
  * @package reptception
  */
 
-namespace Reptception;
+namespace Reptception\Validator;
 
 use RuntimeException;
 
-class ConfigValidator {
+class Config {
     
-    private $pathToConfig;
     private $config;
     
-    public function __construct($path) {
-        $this->pathToConfig = $path;
-    }
-    
-    public function isValid() {
+    public function isValid($path) {
         
-        if (!self::fileExists($this->pathToConfig)) {
-            throw new RuntimeException("File {$this->pathToConfig} does not exists");
+        if (!self::fileExists($path)) {
+            throw new RuntimeException("File {$path} does not exists");
         }
         
-        $this->config = self::loadConfig($this->pathToConfig);
+        $this->config = self::loadConfig($path);
         
         if (!isset($this->config['projects'])) {
             throw new RuntimeException("Config must contain 'projects' key");

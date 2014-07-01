@@ -18,7 +18,7 @@ use Phlyty\App;
 use Reptception\ErrorHandler;
 use Reptception\PhpView;
 use Reptception\Controller;
-use Reptception\ConfigValidator;
+use Reptception\Validator\Config as ConfigValidator;
 
 $app = new App();
 
@@ -31,9 +31,9 @@ $app->setView(new PhpView());
 
 $app->get('/', function(App $app){
     
-    $configValidator = new ConfigValidator('../Reptception/config.php');
+    $configValidator = new ConfigValidator();
     
-    if (!$configValidator->isValid()) {
+    if (!$configValidator->isValid('../Reptception/config.php')) {
         return;
     }
     
