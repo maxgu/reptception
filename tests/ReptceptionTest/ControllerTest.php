@@ -31,7 +31,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
             ),
         );
         
-        $userModel = test::double(
+        $project = test::double(
                 'Reptception\ProjectModel', 
                 array(
                     'create' => 'project 1 object',
@@ -41,7 +41,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
         
         $viewModel = $this->controller->indexAction($config);
         
-        $userModel->verifyInvoked('create'); 
+        $project->verifyInvoked('create'); 
         
         $this->assertInternalType('array', $viewModel);
         $this->assertArrayHasKey('projects', $viewModel);

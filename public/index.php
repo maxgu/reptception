@@ -18,6 +18,7 @@ use Phlyty\App;
 use Reptception\ErrorHandler;
 use Reptception\PhpView;
 use Reptception\Controller;
+use Reptception\ConfigValidator;
 
 $app = new App();
 
@@ -30,8 +31,14 @@ $app->setView(new PhpView());
 
 $app->get('/', function(App $app){
     
+    $configValidator = new ConfigValidator('../Reptception/config.php');
+    
+    if (!$configValidator->isValid()) {
+        return;
+    }
+    
     $controller = new Controller();
-    $viewModel = $controller->indexAction(include '../Reptception/config.php');
+    $viewModel = $controller->indexAction($configValidator->getConfig());
     
     $app->render('index', $viewModel);
 });
