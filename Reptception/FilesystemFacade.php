@@ -27,4 +27,8 @@ class FilesystemFacade {
     public static function getFileChangeTime($path) {
         return filemtime($path);
     }
+    
+    public static function getFileContent($path) {
+        return file_get_contents($path);
+    }
 }

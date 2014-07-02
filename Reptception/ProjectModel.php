@@ -18,6 +18,7 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
     private $path;
     private $reportFileName;
     private $lastRunDate;
+    private $executionTime;
     
     /**
      * 
@@ -67,12 +68,17 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
         return date('Y-m-d H:i:s', $this->lastRunDate);
     }
     
+    public function getExecutionTime() {
+        return $this->executionTime;
+    }
+    
     private function normalize($path) {
         return rtrim($path, '/');
     }
     
-    public function populateInfo($lastRunDate) {
+    public function populateInfo($lastRunDate, $executionTime) {
         $this->lastRunDate = $lastRunDate;
+        $this->executionTime = $executionTime;
     }
     
 }

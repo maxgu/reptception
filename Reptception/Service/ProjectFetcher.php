@@ -12,6 +12,7 @@ namespace Reptception\Service;
 
 use Reptception\PopulateInfoCapableInterface;
 use Reptception\FilesystemFacade as Filesystem;
+use Zend\Dom\Query;
 
 class ProjectFetcher {
     
@@ -19,7 +20,12 @@ class ProjectFetcher {
         
         $lastRunDate = Filesystem::getFileChangeTime($reportFilePath);
         
-        $project->populateInfo($lastRunDate);
+        $dom = new Query(Filesystem::getFileContent($reportFilePath));
+        $executionTimeRaw = $dom->execute('div.layout h1 small')->current()->nodeValue;
+        $executionTimeRaw = explode(' ', $executionTimeRaw);
+        $executionTime = trim($executionTimeRaw[1], '()');
+        
+        $project->populateInfo($lastRunDate, $executionTime);
     }
     
 }

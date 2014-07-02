@@ -26,12 +26,14 @@ class ProjectFetcherTest extends \PHPUnit_Framework_TestCase {
         
         $projectMock = $this->getMock('Reptception\PopulateInfoCapableInterface');
         
+        $path = '/path/to/report.html';
         $lastRunDate = 123456789;
         
         $fs = test::double(
             'Reptception\FilesystemFacade', 
             [
                 'getFileChangeTime' => $lastRunDate,
+                'getFileContent' => '<div class="layout"><h1>Codeception Results <small><span style="color: green">OK</span> (10.3s)</small></h1></div>',
             ]
         );
         
@@ -39,8 +41,10 @@ class ProjectFetcherTest extends \PHPUnit_Framework_TestCase {
                 ->method('populateInfo')
                 ->with($lastRunDate);
         
-        $this->fetcher->fetchInfo($projectMock, '/path/to/report.html');
+        $this->fetcher->fetchInfo($projectMock, $path);
         
+        $fs->verifyInvoked('getFileChangeTime', [$path]); 
+        $fs->verifyInvoked('getFileContent', [$path]); 
     }
     
 }
