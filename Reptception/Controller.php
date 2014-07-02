@@ -19,10 +19,11 @@ class Controller {
         
         $projects = array();
         
-        foreach ($config['projects'] as $projectName => $progectPath) {
+        foreach ($config['projects'] as $projectName => $projectPath) {
             $project = ProjectModel::create(array(
                 'name' => $projectName,
-                'path' => $progectPath
+                'path' => $projectPath,
+                'reportFileName' => $config['html-report-file-name']
             ));
             
             if (!$validator->isValid($project)) {

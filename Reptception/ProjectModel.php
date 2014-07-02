@@ -16,15 +16,17 @@ class ProjectModel implements PathAwareInterface {
     
     private $name;
     private $path;
+    private $reportFileName;
     
     /**
      * 
      * @param string $name
      * @param string $path
      */
-    private function __construct($name, $path) {
+    private function __construct($name, $path, $reportFileName) {
         $this->name = $name;
         $this->path = $path;
+        $this->reportFileName = $reportFileName;
     }
     
     /**
@@ -35,6 +37,12 @@ class ProjectModel implements PathAwareInterface {
      */
     public static function create(array $data) {
         
+        $data = [
+            'name' => null,
+            'path' => null,
+            'reportFileName' => null,
+        ];
+        
         if (!isset($data['name'])) {
             throw new RuntimeException("data must contain 'name'");
         }
@@ -43,7 +51,7 @@ class ProjectModel implements PathAwareInterface {
             throw new RuntimeException("data must contain 'path'");
         }
         
-        return new self($data['name'], $data['path']);
+        return new self($data['name'], $data['path'], $data['reportFileName']);
     }
     
     public function getName() {
