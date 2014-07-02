@@ -19,12 +19,13 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
     
     public function testIndexActionAlwaysReturnArray() {
         
-        $config = array(
-            'projects' => array(
+        $config = [
+            'projects' => [
                 'project 1' => '/path/to/project/1',
                 'project 2' => '/path/to/project/2'
-            ),
-        );
+            ],
+            'html-report-file-name' => 'report.html'
+        ];
         
         $projectValidatorMock = $this->getMockBuilder('Reptception\Validator\Project')
                 ->disableOriginalConstructor()

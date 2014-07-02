@@ -37,19 +37,13 @@ class ProjectModel implements PathAwareInterface {
      */
     public static function create(array $data) {
         
-        $data = [
+        $defaults = [
             'name' => null,
             'path' => null,
             'reportFileName' => null,
         ];
         
-        if (!isset($data['name'])) {
-            throw new RuntimeException("data must contain 'name'");
-        }
-        
-        if (!isset($data['path'])) {
-            throw new RuntimeException("data must contain 'path'");
-        }
+        $data = array_merge($defaults, $data);
         
         return new self($data['name'], $data['path'], $data['reportFileName']);
     }

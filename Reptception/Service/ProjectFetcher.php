@@ -16,9 +16,9 @@ class ProjectFetcher {
     
     public function fetchInfo(PathAwareInterface $project) {
         
-        $reportFilePath = 
+        //$reportFilePath = 
         
-        $lastRunDate = 
+        //$lastRunDate = 
     }
     
 }
