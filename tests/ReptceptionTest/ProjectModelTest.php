@@ -42,5 +42,20 @@ class ProjectModelTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('/path/to/project', $project2->getPath());
     }
     
+    public function testPopulateInfo() {
+        
+        $project = ProjectModel::create(array(
+            'name' => 'project 1',
+            'path' => '/path/to/project'
+        ));
+        
+        $lastRunDate = 123456789;
+        
+        $project->populateInfo($lastRunDate);
+        
+        $this->assertAttributeEquals($lastRunDate, 'lastRunDate', $project);
+        $this->assertEquals(date('Y-m-d H:i:s', $lastRunDate), $project->getLastRunDateFormat());
+    }
+    
 }
 

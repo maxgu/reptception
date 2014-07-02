@@ -10,12 +10,15 @@
 
 namespace Reptception;
 
-use RuntimeException;
 use Reptception\Validator\Project as ProjectValidator;
+use Reptception\Service\ProjectFetcher;
 
 class Controller {
     
-    public function indexAction(array $config, ProjectValidator $validator) {
+    public function indexAction(
+            array $config, 
+            ProjectValidator $validator, 
+            ProjectFetcher $projectFetcher) {
         
         $projects = array();
         
@@ -29,6 +32,8 @@ class Controller {
             if (!$validator->isValid($project)) {
                 return;
             }
+            
+            $projectFetcher->fetchInfo($project, $project->getReportFilePath());
             
             $projects[] = $project;
         }

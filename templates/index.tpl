@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item"></i>run at <i class="fa fa-calendar"></i> <mark>2014-06-29 12:39</mark></li>
+                    <li class="list-group-item"></i>run at <i class="fa fa-calendar"></i> <mark><?=$project->getLastRunDateFormat()?></mark></li>
                     <li class="list-group-item"><mark>28.1s</mark> executed</li>
                     <li class="list-group-item"><mark>22</mark> Acceptance Tests</li>
                     <li class="list-group-item"><mark>32</mark> Selenium Tests</li>

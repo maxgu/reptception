@@ -23,4 +23,8 @@ class FilesystemFacade {
     public static function includeFile($path) {
         return include $path;
     }
+    
+    public static function getFileChangeTime($path) {
+        return filemtime($path);
+    }
 }

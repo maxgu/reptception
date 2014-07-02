@@ -2,6 +2,7 @@
 
 namespace ReptceptionTest;
 
+use AspectMock\Test as test;
 use Reptception\Service\ProjectFetcher;
 
 class ProjectFetcherTest extends \PHPUnit_Framework_TestCase {
@@ -17,13 +18,29 @@ class ProjectFetcherTest extends \PHPUnit_Framework_TestCase {
         $this->fetcher = new ProjectFetcher();
     }
     
+    protected function tearDown() {
+        test::clean();
+    }
+    
     public function testFetchInfo() {
         
-        $projectMock = $this->getMock('Reptception\PathAwareInterface');
+        $projectMock = $this->getMock('Reptception\PopulateInfoCapableInterface');
         
-        $this->fetcher->fetchInfo($projectMock);
+        $lastRunDate = 123456789;
         
-        $this->assertTrue(true);
+        $fs = test::double(
+            'Reptception\FilesystemFacade', 
+            [
+                'getFileChangeTime' => $lastRunDate,
+            ]
+        );
+        
+        $projectMock->expects($this->once())
+                ->method('populateInfo')
+                ->with($lastRunDate);
+        
+        $this->fetcher->fetchInfo($projectMock, '/path/to/report.html');
+        
     }
     
 }

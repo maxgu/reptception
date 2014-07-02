@@ -12,11 +12,12 @@ namespace Reptception;
 
 use RuntimeException;
 
-class ProjectModel implements PathAwareInterface {
+class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
     
     private $name;
     private $path;
     private $reportFileName;
+    private $lastRunDate;
     
     /**
      * 
@@ -62,8 +63,16 @@ class ProjectModel implements PathAwareInterface {
                 . $this->reportFileName;
     }
     
+    public function getLastRunDateFormat() {
+        return date('Y-m-d H:i:s', $this->lastRunDate);
+    }
+    
     private function normalize($path) {
         return rtrim($path, '/');
+    }
+    
+    public function populateInfo($lastRunDate) {
+        $this->lastRunDate = $lastRunDate;
     }
     
 }

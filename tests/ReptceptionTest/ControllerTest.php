@@ -31,11 +31,18 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
                 ->disableOriginalConstructor()
                 ->getMock();
         
+        $projectFetcherMock = $this->getMockBuilder('Reptception\Service\ProjectFetcher')
+                ->disableOriginalConstructor()
+                ->getMock();
+        
         $projectValidatorMock->expects($this->exactly(2))
                 ->method('isValid')
                 ->will($this->returnValue(true));
         
-        $viewModel = $this->controller->indexAction($config, $projectValidatorMock);
+        $projectFetcherMock->expects($this->exactly(2))
+                ->method('fetchInfo');
+        
+        $viewModel = $this->controller->indexAction($config, $projectValidatorMock, $projectFetcherMock);
         
         $this->assertInternalType('array', $viewModel);
         $this->assertArrayHasKey('projects', $viewModel);

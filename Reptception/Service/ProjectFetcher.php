@@ -10,15 +10,16 @@
 
 namespace Reptception\Service;
 
-use Reptception\PathAwareInterface;
+use Reptception\PopulateInfoCapableInterface;
+use Reptception\FilesystemFacade as Filesystem;
 
 class ProjectFetcher {
     
-    public function fetchInfo(PathAwareInterface $project) {
+    public function fetchInfo(PopulateInfoCapableInterface $project, $reportFilePath) {
         
-        //$reportFilePath = 
+        $lastRunDate = Filesystem::getFileChangeTime($reportFilePath);
         
-        //$lastRunDate = 
+        $project->populateInfo($lastRunDate);
     }
     
 }

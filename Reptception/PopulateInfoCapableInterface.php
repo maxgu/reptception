@@ -10,9 +10,9 @@
 
 namespace Reptception;
 
-interface PathAwareInterface {
+
+interface PopulateInfoCapableInterface {
     
-    public function getPath();
-    public function getReportFilePath();
+    public function populateInfo($lastRunDate);
     
 }
