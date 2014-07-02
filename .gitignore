@@ -1,4 +1,5 @@
 /nbproject
 /vendor/
 /data/
+/Reptception/config.local.php
 composer.lock
