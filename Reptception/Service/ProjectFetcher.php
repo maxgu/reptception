@@ -25,13 +25,17 @@ class ProjectFetcher {
         $time = 0.0;
         $acceptanceTestsCount = 0;
         $seleniumTestsCount = 0;
+        $acceptanceTestsFailures = 0;
+        $seleniumTestsFailures = 0;
         foreach ($testsuites as $testsuite) {
             if ($testsuite['name'] == 'selenium') {
                 $seleniumTestsCount = $testsuite['tests'];
+                $seleniumTestsFailures = $testsuite['failures'];
             }
             
             if ($testsuite['name'] == 'acceptance') {
                 $acceptanceTestsCount = $testsuite['tests'];
+                $acceptanceTestsFailures = $testsuite['failures'];
             }
             
             $time += (double)$testsuite['time'];
@@ -43,7 +47,9 @@ class ProjectFetcher {
                 $lastRunDate, 
                 $executionTime, 
                 $acceptanceTestsCount,
-                $seleniumTestsCount);
+                $seleniumTestsCount,
+                $acceptanceTestsFailures,
+                $seleniumTestsFailures);
     }
     
 }

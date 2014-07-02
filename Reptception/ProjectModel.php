@@ -21,6 +21,8 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
     private $executionTime;
     private $acceptanceTestsCount;
     private $seleniumTestsCount;
+    private $acceptanceTestsFailures;
+    private $seleniumTestsFailures;
     
     /**
      * 
@@ -82,6 +84,28 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
         return $this->seleniumTestsCount;
     }
     
+    public function getAcceptanceTestsFailures() {
+        return $this->acceptanceTestsFailures;
+    }
+    
+    public function getSeleniumTestsFailures() {
+        return $this->seleniumTestsFailures;
+    }
+    
+    public function getFailurePercent() {
+        $totalTests = $this->seleniumTestsCount + $this->acceptanceTestsCount;
+        $totalFailures = $this->seleniumTestsFailures + $this->acceptanceTestsFailures;
+        return round(($totalFailures * 100) / $totalTests);
+    }
+    
+    public function getSuccesPercent() {
+        return 100 - $this->getFailurePercent();
+    }
+    
+    public function isSuccess() {
+        return ($this->getAcceptanceTestsFailures() == 0 && $this->getSeleniumTestsFailures() == 0);
+    }
+    
     private function normalize($path) {
         return rtrim($path, '/');
     }
@@ -90,11 +114,15 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
             $lastRunDate, 
             $executionTime, 
             $acceptanceTestsCount, 
-            $seleniumTestsCount) {
+            $seleniumTestsCount,
+            $acceptanceTestsFailures,
+            $seleniumTestsFailures) {
         $this->lastRunDate = $lastRunDate;
         $this->executionTime = $executionTime;
         $this->acceptanceTestsCount = $acceptanceTestsCount;
         $this->seleniumTestsCount = $seleniumTestsCount;
+        $this->acceptanceTestsFailures = $acceptanceTestsFailures;
+        $this->seleniumTestsFailures = $seleniumTestsFailures;
     }
     
 }

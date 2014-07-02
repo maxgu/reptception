@@ -17,6 +17,8 @@ interface PopulateInfoCapableInterface {
             $lastRunDate, 
             $executionTime, 
             $acceptanceTestsCount, 
-            $seleniumTestsCount);
+            $seleniumTestsCount,
+            $acceptanceTestsFailures,
+            $seleniumTestsFailures);
     
 }
