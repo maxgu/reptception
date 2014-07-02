@@ -12,7 +12,7 @@ namespace Reptception;
 
 use RuntimeException;
 
-class ProjectModel {
+class ProjectModel implements PathAwareInterface {
     
     private $name;
     private $path;

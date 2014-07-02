@@ -27,15 +27,16 @@ class ProjectTest extends \PHPUnit_Framework_TestCase {
 
     public function testIsValidThrowsExceptionIfConfigDoesNotExists() {
         
-        return $this->markTestIncomplete();
-        
         $this->setExpectedException('RuntimeException');
         
-        $project = test::double('Reptception\ProjectModel', ['getPath' => '/path/to/project']);
+        $projectMock = $this->getMock('Reptception\PathAwareInterface');
         
-        $this->validator->isValid($project);
+        $projectMock->expects($this->once())
+                ->method('getPath')
+                ->will($this->returnValue('/path/to/project'));
+        
+        $this->validator->isValid($projectMock);
         
     }
-    
     
 }

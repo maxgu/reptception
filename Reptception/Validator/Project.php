@@ -10,7 +10,9 @@
 
 namespace Reptception\Validator;
 
-use Reptception\ProjectModel;
+use RuntimeException;
+use Reptception\PathAwareInterface;
+use Reptception\FilesystemFacade as Filesystem;
 
 class Project {
     
@@ -20,9 +22,11 @@ class Project {
         $this->config = $config;
     }
     
-    public function isValid(ProjectModel $project) {
+    public function isValid(PathAwareInterface $project) {
         
-        $pathToHtmlReport = $project->getPath() . $config['html-report-file-name'];
+        $pathToHtmlReport = $project->getPath() 
+                . DIRECTORY_SEPARATOR
+                . $this->config['html-report-file-name'];
         
         if (!Filesystem::fileExists($pathToHtmlReport)) {
             throw new RuntimeException("File {$pathToHtmlReport} does not exists");
