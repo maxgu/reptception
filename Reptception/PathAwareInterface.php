@@ -11,5 +11,6 @@ namespace Reptception;
 interface PathAwareInterface {
     
     public function getPath();
+    public function getReportFilePath();
     
 }
