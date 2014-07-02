@@ -19,6 +19,7 @@ use Reptception\ErrorHandler;
 use Reptception\PhpView;
 use Reptception\Controller;
 use Reptception\Validator\Config as ConfigValidator;
+use Reptception\Validator\Project as ProjectValidator;
 
 $app = new App();
 
@@ -38,7 +39,10 @@ $app->get('/', function(App $app){
     }
     
     $controller = new Controller();
-    $viewModel = $controller->indexAction($configValidator->getConfig());
+    $viewModel = $controller->indexAction(
+            $configValidator->getConfig(), 
+            new ProjectValidator($configValidator->getConfig())
+    );
     
     $app->render('index', $viewModel);
 });

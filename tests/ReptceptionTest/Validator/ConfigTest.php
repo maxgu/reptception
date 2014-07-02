@@ -5,7 +5,7 @@ namespace ReptceptionTest;
 use AspectMock\Test as test;
 use Reptception\Validator\Config as ConfigValidator;
 
-class ConfigValidatorTest extends \PHPUnit_Framework_TestCase {
+class ConfigTest extends \PHPUnit_Framework_TestCase {
     
     /**
      *
@@ -31,11 +31,11 @@ class ConfigValidatorTest extends \PHPUnit_Framework_TestCase {
     
     public function testIsValidThrowsExceptionIfConfigNotContainProjectKey() {
         
-        $validator = test::double(
-            'Reptception\Validator\Config', 
+        $fs = test::double(
+            'Reptception\FilesystemFacade', 
             [
                 'fileExists' => true,
-                'loadConfig' => []
+                'includeFile' => []
             ]
         );
         
@@ -51,18 +51,18 @@ class ConfigValidatorTest extends \PHPUnit_Framework_TestCase {
         
         $config = ['projects' => []];
         
-        $validator = test::double(
-            'Reptception\Validator\Config', 
+        $fs = test::double(
+            'Reptception\FilesystemFacade', 
             [
                 'fileExists' => true,
-                'loadConfig' => $config
+                'includeFile' => $config
             ]
         );
         
         $result = $this->validator->isValid($path);
         
-        $validator->verifyInvoked('fileExists', [$path]); 
-        $validator->verifyInvoked('loadConfig', [$path]); 
+        $fs->verifyInvoked('fileExists', [$path]); 
+        $fs->verifyInvoked('includeFile', [$path]); 
         $this->assertTrue($result);
         $this->assertAttributeEquals($config, 'config', $this->validator);
         $this->assertEquals($config, $this->validator->getConfig());

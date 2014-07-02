@@ -11,6 +11,7 @@
 namespace Reptception\Validator;
 
 use RuntimeException;
+use Reptception\FilesystemFacade as Filesystem;
 
 class Config {
     
@@ -18,11 +19,11 @@ class Config {
     
     public function isValid($path) {
         
-        if (!self::fileExists($path)) {
+        if (!Filesystem::fileExists($path)) {
             throw new RuntimeException("File {$path} does not exists");
         }
         
-        $this->config = self::loadConfig($path);
+        $this->config = Filesystem::includeFile($path);
         
         if (!isset($this->config['projects'])) {
             throw new RuntimeException("Config must contain 'projects' key");
@@ -33,14 +34,6 @@ class Config {
     
     public function getConfig() {
         return $this->config;
-    }
-    
-    private static function fileExists($path) {
-        return file_exists($path);
-    }
-    
-    private static function loadConfig($path) {
-        return include $path;
     }
     
 }

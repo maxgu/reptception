@@ -10,11 +10,24 @@
 
 namespace Reptception\Validator;
 
-use Reptception\ProjectModel as Project;
+use Reptception\ProjectModel;
 
 class Project {
     
-    public function isValid(Project $project) {
+    private $config;
+    
+    public function __construct($config) {
+        $this->config = $config;
+    }
+    
+    public function isValid(ProjectModel $project) {
+        
+        $pathToHtmlReport = $project->getPath() . $config['html-report-file-name'];
+        
+        if (!Filesystem::fileExists($pathToHtmlReport)) {
+            throw new RuntimeException("File {$pathToHtmlReport} does not exists");
+        }
+        
         return true;
     }
     

@@ -10,7 +10,9 @@
 
 return array(
     'projects' => array(
-        'besplatka' => '/storage/proj/besplatka/web',
-        'navsegda' => '/storage/proj/navs/web/',
+        'besplatka' => '/storage/proj/besplatka/web/tests/_output/',
+        'navsegda' => '/storage/proj/navs/web/tests/_output/',
     ),
+    
+    'html-report-file-name' => 'report.html'
 );

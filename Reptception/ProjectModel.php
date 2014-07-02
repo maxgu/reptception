@@ -50,4 +50,12 @@ class ProjectModel {
         return $this->name;
     }
     
+    public function getPath() {
+        return $this->normalize($this->path);
+    }
+    
+    private function normalize($path) {
+        return rtrim($path, '/');
+    }
+    
 }

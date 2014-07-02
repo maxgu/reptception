@@ -2,7 +2,6 @@
 
 namespace ReptceptionTest;
 
-use AspectMock\Test as test;
 use Reptception\Controller;
 
 class ControllerTest extends \PHPUnit_Framework_TestCase {
@@ -18,10 +17,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
         $this->controller = new Controller();
     }
     
-    protected function tearDown() {
-        test::clean();
-    }
-    
     public function testIndexActionAlwaysReturnArray() {
         
         $config = array(
@@ -31,17 +26,15 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
             ),
         );
         
-        $project = test::double(
-                'Reptception\ProjectModel', 
-                array(
-                    'create' => 'project 1 object',
-                    'create' => 'project 2 object'
-                )
-        );
+        $projectValidatorMock = $this->getMockBuilder('Reptception\Validator\Project')
+                ->disableOriginalConstructor()
+                ->getMock();
         
-        $viewModel = $this->controller->indexAction($config);
+        $projectValidatorMock->expects($this->exactly(2))
+                ->method('isValid')
+                ->will($this->returnValue(true));
         
-        $project->verifyInvoked('create'); 
+        $viewModel = $this->controller->indexAction($config, $projectValidatorMock);
         
         $this->assertInternalType('array', $viewModel);
         $this->assertArrayHasKey('projects', $viewModel);

@@ -18,8 +18,9 @@ class ErrorHandler {
         /* @var $exception \Exception */
         $exception = $app->getParam('exception');
         
-        echo $exception->getMessage() . '<br><hr>';
-        echo '<pre>' . $exception->getTraceAsString() . '</pre>';
+        $app->getTarget()->response()->setStatusCode(500);
+        
+        return $app->getTarget()->render('error', compact('exception'));
     }
 
 }

@@ -10,17 +10,26 @@
 
 namespace Reptception;
 
+use RuntimeException;
+use Reptception\Validator\Project as ProjectValidator;
+
 class Controller {
     
-    public function indexAction(array $config) {
+    public function indexAction(array $config, ProjectValidator $validator) {
         
         $projects = array();
         
         foreach ($config['projects'] as $projectName => $progectPath) {
-            $projects[] = ProjectModel::create(array(
+            $project = ProjectModel::create(array(
                 'name' => $projectName,
                 'path' => $progectPath
             ));
+            
+            if (!$validator->isValid($project)) {
+                return;
+            }
+            
+            $projects[] = $project;
         }
         
         return compact('projects');
