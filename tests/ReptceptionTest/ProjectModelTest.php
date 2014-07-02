@@ -50,15 +50,23 @@ class ProjectModelTest extends \PHPUnit_Framework_TestCase {
         ));
         
         $lastRunDate = 123456789;
-        $executionTime = '8.2s';
+        $executionTime = 8.2;
+        $acceptanceTestsCount = 21;
+        $seleniumTestsCount = 16;
         
-        $project->populateInfo($lastRunDate, $executionTime);
+        $project->populateInfo($lastRunDate, $executionTime, $acceptanceTestsCount, $seleniumTestsCount);
         
         $this->assertAttributeEquals($lastRunDate, 'lastRunDate', $project);
         $this->assertEquals(date('Y-m-d H:i:s', $lastRunDate), $project->getLastRunDateFormat());
         
         $this->assertAttributeEquals($executionTime, 'executionTime', $project);
         $this->assertEquals($executionTime, $project->getExecutionTime());
+        
+        $this->assertAttributeEquals($acceptanceTestsCount, 'acceptanceTestsCount', $project);
+        $this->assertEquals($acceptanceTestsCount, $project->getAcceptanceTestsCount());
+        
+        $this->assertAttributeEquals($seleniumTestsCount, 'seleniumTestsCount', $project);
+        $this->assertEquals($seleniumTestsCount, $project->getSeleniumTestsCount());
     }
     
 }

@@ -12,7 +12,7 @@ namespace Reptception\Service;
 
 use Reptception\PopulateInfoCapableInterface;
 use Reptception\FilesystemFacade as Filesystem;
-use Zend\Dom\Query;
+use SimpleXMLElement;
 
 class ProjectFetcher {
     
@@ -20,12 +20,30 @@ class ProjectFetcher {
         
         $lastRunDate = Filesystem::getFileChangeTime($reportFilePath);
         
-        $dom = new Query(Filesystem::getFileContent($reportFilePath));
-        $executionTimeRaw = $dom->execute('div.layout h1 small')->current()->nodeValue;
-        $executionTimeRaw = explode(' ', $executionTimeRaw);
-        $executionTime = trim($executionTimeRaw[1], '()');
+        $testsuites = new SimpleXMLElement(Filesystem::getFileContent($reportFilePath));
         
-        $project->populateInfo($lastRunDate, $executionTime);
+        $time = 0.0;
+        $acceptanceTestsCount = 0;
+        $seleniumTestsCount = 0;
+        foreach ($testsuites as $testsuite) {
+            if ($testsuite['name'] == 'selenium') {
+                $seleniumTestsCount = $testsuite['tests'];
+            }
+            
+            if ($testsuite['name'] == 'acceptance') {
+                $acceptanceTestsCount = $testsuite['tests'];
+            }
+            
+            $time += (double)$testsuite['time'];
+        }
+        
+        $executionTime = round($time, 1);
+        
+        $project->populateInfo(
+                $lastRunDate, 
+                $executionTime, 
+                $acceptanceTestsCount,
+                $seleniumTestsCount);
     }
     
 }

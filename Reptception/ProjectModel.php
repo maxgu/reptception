@@ -19,6 +19,8 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
     private $reportFileName;
     private $lastRunDate;
     private $executionTime;
+    private $acceptanceTestsCount;
+    private $seleniumTestsCount;
     
     /**
      * 
@@ -72,13 +74,27 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
         return $this->executionTime;
     }
     
+    public function getAcceptanceTestsCount() {
+        return $this->acceptanceTestsCount;
+    }
+    
+    public function getSeleniumTestsCount() {
+        return $this->seleniumTestsCount;
+    }
+    
     private function normalize($path) {
         return rtrim($path, '/');
     }
     
-    public function populateInfo($lastRunDate, $executionTime) {
+    public function populateInfo(
+            $lastRunDate, 
+            $executionTime, 
+            $acceptanceTestsCount, 
+            $seleniumTestsCount) {
         $this->lastRunDate = $lastRunDate;
         $this->executionTime = $executionTime;
+        $this->acceptanceTestsCount = $acceptanceTestsCount;
+        $this->seleniumTestsCount = $seleniumTestsCount;
     }
     
 }

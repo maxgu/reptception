@@ -14,5 +14,5 @@ return array(
         'navsegda' => '/storage/proj/navs/web/tests/_output/',
     ),
     
-    'html-report-file-name' => 'report.html'
+    'html-report-file-name' => 'report.xml'
 );

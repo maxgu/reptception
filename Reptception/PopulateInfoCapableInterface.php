@@ -13,6 +13,10 @@ namespace Reptception;
 
 interface PopulateInfoCapableInterface {
     
-    public function populateInfo($lastRunDate, $executionTime);
+    public function populateInfo(
+            $lastRunDate, 
+            $executionTime, 
+            $acceptanceTestsCount, 
+            $seleniumTestsCount);
     
 }

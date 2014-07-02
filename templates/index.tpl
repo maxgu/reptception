@@ -20,9 +20,9 @@
                 </div>
                 <ul class="list-group list-group-flush text-center">
                     <li class="list-group-item"></i>run at <i class="fa fa-calendar"></i> <mark><?=$project->getLastRunDateFormat()?></mark></li>
-                    <li class="list-group-item"><mark><?=$project->getExecutionTime()?></mark> executed</li>
-                    <li class="list-group-item"><mark>22</mark> Acceptance Tests</li>
-                    <li class="list-group-item"><mark>32</mark> Selenium Tests</li>
+                    <li class="list-group-item"><mark><?=$project->getExecutionTime()?>s</mark> executed</li>
+                    <li class="list-group-item"><mark><?=$project->getAcceptanceTestsCount()?></mark> Acceptance Tests</li>
+                    <li class="list-group-item"><mark><?=$project->getSeleniumTestsCount()?></mark> Selenium Tests</li>
                     <li class="list-group-item">
                         <a href="#" class="btn btn-default btn-xs" target="_blank"><i class="fa fa-hand-o-up"></i> Run manually</i></i></a>
                         <a href="#" class="btn btn-info btn-xs" target="_blank">Detailed report <i class="fa fa-external-link"></i></a>
