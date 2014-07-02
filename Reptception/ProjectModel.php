@@ -56,6 +56,12 @@ class ProjectModel implements PathAwareInterface {
         return $this->normalize($this->path);
     }
     
+    public function getReportFilePath() {
+        return $this->getPath() 
+                . DIRECTORY_SEPARATOR
+                . $this->reportFileName;
+    }
+    
     private function normalize($path) {
         return rtrim($path, '/');
     }

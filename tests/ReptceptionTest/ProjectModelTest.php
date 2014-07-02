@@ -10,10 +10,12 @@ class ProjectModelTest extends \PHPUnit_Framework_TestCase {
         
         $name = 'project 1';
         $path = '/path/to/project';
+        $reportFileName = 'report.html';
         
         $project = ProjectModel::create(array(
             'name' => $name,
-            'path' => $path
+            'path' => $path,
+            'reportFileName' => $reportFileName
         ));
         
         $this->assertInstanceOf('Reptception\ProjectModel', $project);
@@ -21,6 +23,8 @@ class ProjectModelTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($name, $project->getName());
         $this->assertAttributeEquals($path, 'path', $project);
         $this->assertEquals($path, $project->getPath());
+        $this->assertAttributeEquals($reportFileName, 'reportFileName', $project);
+        $this->assertEquals($path . DIRECTORY_SEPARATOR . $reportFileName, $project->getReportFilePath());
     }
     
     public function testGetPathWillBeNormalize() {
