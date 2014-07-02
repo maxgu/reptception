@@ -16,6 +16,10 @@ class FilesystemFacade {
         return file_exists($path);
     }
     
+    public static function isReadable($path) {
+        return is_readable($path);
+    }
+    
     public static function includeFile($path) {
         return include $path;
     }

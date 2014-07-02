@@ -25,8 +25,19 @@ class Config {
         
         $this->config = Filesystem::includeFile($path);
         
+        $pathToLocalConfig = str_replace('config.php', 'config.local.php', $path);
+        
+        if (Filesystem::fileExists($pathToLocalConfig)) {
+            $localConfig = Filesystem::includeFile($pathToLocalConfig);
+            $this->config = array_merge($this->config, $localConfig);
+        }
+        
         if (!isset($this->config['projects'])) {
             throw new RuntimeException("Config must contain 'projects' key");
+        }
+        
+        if (!isset($this->config['html-report-file-name'])) {
+            throw new RuntimeException("Config must contain 'html-report-file-name' key");
         }
         
         return true;

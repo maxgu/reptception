@@ -28,7 +28,7 @@ class Project {
                 . DIRECTORY_SEPARATOR
                 . $this->config['html-report-file-name'];
         
-        if (!Filesystem::fileExists($pathToHtmlReport)) {
+        if (!Filesystem::isReadable($pathToHtmlReport)) {
             throw new RuntimeException("File {$pathToHtmlReport} does not exists");
         }
         

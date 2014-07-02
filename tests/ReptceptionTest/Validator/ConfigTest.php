@@ -49,7 +49,10 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         
         $path = '/path/to/config.php';
         
-        $config = ['projects' => []];
+        $config = [
+            'projects' => [],
+            'html-report-file-name' => 'report.html'
+        ];
         
         $fs = test::double(
             'Reptception\FilesystemFacade', 
