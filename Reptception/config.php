@@ -10,8 +10,8 @@
 
 return array(
     'projects' => array(
-        'besplatka' => '/storage/proj/besplatka/web/tests/_output/',
-        'navsegda' => '/storage/proj/navs/web/tests/_output/',
+        'project 1' => '/storage/proj/project1/web/tests/_output/',
+        'project 2' => '/storage/proj/project2/web/tests/_output/',
     ),
     
     'html-report-file-name' => 'report.xml'
