@@ -15,8 +15,12 @@ use RuntimeException;
 class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
     
     private $name;
+    private $storagePath;
+    private $webPath;
+    private $webceptionUrl;
     private $path;
-    private $reportFileName;
+    private $xmlReportFileName;
+    private $htmlReportFileName;
     private $lastRunDate;
     private $executionTime;
     private $acceptanceTestsCount;
@@ -29,10 +33,14 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
      * @param string $name
      * @param string $path
      */
-    private function __construct($name, $path, $reportFileName) {
+    private function __construct($name, $storagePath, $webPath, 
+            $webceptionUrl, $xmlReportFileName, $htmlReportFileName) {
         $this->name = $name;
-        $this->path = $path;
-        $this->reportFileName = $reportFileName;
+        $this->storagePath = $storagePath;
+        $this->webPath = $webPath;
+        $this->webceptionUrl = $webceptionUrl;
+        $this->xmlReportFileName = $xmlReportFileName;
+        $this->htmlReportFileName = $htmlReportFileName;
     }
     
     /**
@@ -45,27 +53,53 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
         
         $defaults = [
             'name' => null,
-            'path' => null,
-            'reportFileName' => null,
+            'storagePath' => null,
+            'webPath' => null,
+            'webceptionUrl' => null,
+            'xmlReportFileName' => null,
+            'htmlReportFileName' => null,
         ];
         
         $data = array_merge($defaults, $data);
         
-        return new self($data['name'], $data['path'], $data['reportFileName']);
+        return new self($data['name'], 
+                $data['storagePath'], 
+                $data['webPath'], 
+                $data['webceptionUrl'], 
+                $data['xmlReportFileName'], 
+                $data['htmlReportFileName']);
     }
     
     public function getName() {
         return $this->name;
     }
     
-    public function getPath() {
-        return $this->normalize($this->path);
+    public function getStoragePath() {
+        return $this->normalize($this->storagePath);
     }
     
-    public function getReportFilePath() {
-        return $this->getPath() 
+    public function getWebPath() {
+        return $this->normalize($this->webPath);
+    }
+    
+    public function getWebceptionUrl() {
+        return $this->webceptionUrl;
+    }
+    
+    private function normalize($path) {
+        return rtrim($path, '/');
+    }
+    
+    public function getXmlReportFilePath() {
+        return $this->getStoragePath()
                 . DIRECTORY_SEPARATOR
-                . $this->reportFileName;
+                . $this->xmlReportFileName;
+    }
+    
+    public function getHtmlReportFilePath() {
+        return $this->getWebPath()
+                . DIRECTORY_SEPARATOR
+                . $this->htmlReportFileName;
     }
     
     public function getLastRunDateFormat() {
@@ -104,10 +138,6 @@ class ProjectModel implements PathAwareInterface, PopulateInfoCapableInterface {
     
     public function isSuccess() {
         return ($this->getAcceptanceTestsFailures() == 0 && $this->getSeleniumTestsFailures() == 0);
-    }
-    
-    private function normalize($path) {
-        return rtrim($path, '/');
     }
     
     public function populateInfo(

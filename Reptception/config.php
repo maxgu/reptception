@@ -10,9 +10,34 @@
 
 return array(
     'projects' => array(
-        'project 1' => '/storage/proj/project1/web/tests/_output/',
-        'project 2' => '/storage/proj/project2/web/tests/_output/',
+        array(
+            'name' => 'project 1',
+            
+            'storagePath' => '/storage/proj/project1/web/tests/_output/',
+            
+            // leave empty if not exists
+            'webPath' => 'http://proj1.loc/tests/_output/',  
+            
+            // leave empty if not exists
+            'webceptionUrl' => 'http://webception.loc/',
+            
+            'xmlReportFileName' => 'report.xml',
+            
+            // leave empty if not exists
+            'htmlReportFileName' => 'report.html',
+        ),
+        array(
+            'name' => 'project 2',
+            
+            'storagePath' => '/storage/proj/project2/web/tests/_output/',
+            
+            // leave empty if not exists
+            'webPath' => 'http://proj2.loc/tests/_output/',
+            
+            'xmlReportFileName' => 'report.xml',
+            
+            // leave empty if not exists
+            'htmlReportFileName' => 'report.html',
+        ),
     ),
-    
-    'html-report-file-name' => 'report.xml'
 );

@@ -21,10 +21,21 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
         
         $config = [
             'projects' => [
-                'project 1' => '/path/to/project/1',
-                'project 2' => '/path/to/project/2'
+                [
+                    'name' => 'project 1',
+                    'storagePath' => '/storage/proj/project1/web/tests/_output/',
+                    'webPath' => 'http://proj1.loc/tests/_output/',
+                    'xmlReportFileName' => 'report.xml',
+                    'htmlReportFileName' => 'report.html',
+                ],
+                [
+                    'name' => 'project 2',
+                    'storagePath' => '/storage/proj/project2/web/tests/_output/',
+                    'webPath' => 'http://proj2.loc/tests/_output/',
+                    'xmlReportFileName' => 'report.xml',
+                    'htmlReportFileName' => 'report.html',
+                ]
             ],
-            'html-report-file-name' => 'report.html'
         ];
         
         $projectValidatorMock = $this->getMockBuilder('Reptception\Validator\Project')

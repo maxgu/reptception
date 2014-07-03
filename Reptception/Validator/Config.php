@@ -36,10 +36,6 @@ class Config {
             throw new RuntimeException("Config must contain 'projects' key");
         }
         
-        if (!isset($this->config['html-report-file-name'])) {
-            throw new RuntimeException("Config must contain 'html-report-file-name' key");
-        }
-        
         return true;
     }
     

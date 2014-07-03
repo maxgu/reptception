@@ -24,8 +24,12 @@
                     <li class="list-group-item"><mark><?=$project->getAcceptanceTestsCount()?></mark> Acceptance Tests</li>
                     <li class="list-group-item"><mark><?=$project->getSeleniumTestsCount()?></mark> Selenium Tests</li>
                     <li class="list-group-item">
-                        <a href="#" class="btn btn-default btn-xs" target="_blank"><i class="fa fa-hand-o-up"></i> Run manually</i></i></a>
-                        <a href="#" class="btn btn-info btn-xs" target="_blank">Detailed report <i class="fa fa-external-link"></i></a>
+                        <?php if ($project->getWebceptionUrl() != ''): ?>
+                            <a href="<?=$project->getWebceptionUrl()?>" class="btn btn-default btn-xs" target="_blank"><i class="fa fa-hand-o-up"></i> Run manually</i></i></a>
+                        <?php endif; ?>
+                        <?php if ($project->getWebPath() != ''): ?>
+                            <a href="<?=$project->getHtmlReportFilePath()?>" class="btn btn-info btn-xs" target="_blank">Detailed report <i class="fa fa-external-link"></i></a>
+                        <?php endif; ?>
                     </li>
                 </ul>
                 <div class="panel-footer">

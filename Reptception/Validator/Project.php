@@ -16,20 +16,12 @@ use Reptception\FilesystemFacade as Filesystem;
 
 class Project {
     
-    private $config;
-    
-    public function __construct($config) {
-        $this->config = $config;
-    }
-    
     public function isValid(PathAwareInterface $project) {
         
-        $pathToHtmlReport = $project->getPath() 
-                . DIRECTORY_SEPARATOR
-                . $this->config['html-report-file-name'];
+        $pathToXmlReport = $project->getXmlReportFilePath();
         
-        if (!Filesystem::isReadable($pathToHtmlReport)) {
-            throw new RuntimeException("File {$pathToHtmlReport} does not exists");
+        if (!Filesystem::isReadable($pathToXmlReport)) {
+            throw new RuntimeException("File {$pathToXmlReport} does not exists");
         }
         
         return true;

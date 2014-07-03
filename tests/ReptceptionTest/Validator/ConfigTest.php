@@ -51,7 +51,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         
         $config = [
             'projects' => [],
-            'html-report-file-name' => 'report.html'
         ];
         
         $fs = test::double(

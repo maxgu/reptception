@@ -13,10 +13,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase {
     private $validator;
     
     protected function setUp() {
-        $this->validator = new ProjectValidator(
-            [
-                'html-report-file-name' => 'report.html'
-            ]);
+        $this->validator = new ProjectValidator();
     }
 
     public function testIsValidThrowsExceptionIfConfigDoesNotExists() {
@@ -26,7 +23,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase {
         $projectMock = $this->getMock('Reptception\PathAwareInterface');
         
         $projectMock->expects($this->once())
-                ->method('getPath')
+                ->method('getXmlReportFilePath')
                 ->will($this->returnValue('/path/to/project'));
         
         $this->validator->isValid($projectMock);

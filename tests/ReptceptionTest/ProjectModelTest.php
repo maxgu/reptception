@@ -8,45 +8,57 @@ class ProjectModelTest extends \PHPUnit_Framework_TestCase {
     
     public function testCreate() {
         
-        $name = 'project 1';
-        $path = '/path/to/project';
-        $reportFileName = 'report.html';
+        $projectConfig = array(
+            'name' => 'project 1',
+            'storagePath' => '/storage/proj/project1/web/tests/_output',
+            'webPath' => 'http://proj1.loc/tests/_output',
+            'xmlReportFileName' => 'report.xml',
+            'htmlReportFileName' => 'report.html',
+        );
         
-        $project = ProjectModel::create(array(
-            'name' => $name,
-            'path' => $path,
-            'reportFileName' => $reportFileName
-        ));
+        $project = ProjectModel::create($projectConfig);
         
         $this->assertInstanceOf('Reptception\ProjectModel', $project);
-        $this->assertAttributeEquals($name, 'name', $project);
-        $this->assertEquals($name, $project->getName());
-        $this->assertAttributeEquals($path, 'path', $project);
-        $this->assertEquals($path, $project->getPath());
-        $this->assertAttributeEquals($reportFileName, 'reportFileName', $project);
-        $this->assertEquals($path . DIRECTORY_SEPARATOR . $reportFileName, $project->getReportFilePath());
+        $this->assertAttributeEquals($projectConfig['name'], 'name', $project);
+        $this->assertEquals($projectConfig['name'], $project->getName());
+        
+        $this->assertAttributeEquals($projectConfig['storagePath'], 'storagePath', $project);
+        $this->assertEquals($projectConfig['storagePath'], $project->getStoragePath());
+        
+        $this->assertAttributeEquals($projectConfig['webPath'], 'webPath', $project);
+        $this->assertEquals($projectConfig['webPath'], $project->getWebPath());
+        
+        $this->assertAttributeEquals($projectConfig['xmlReportFileName'], 'xmlReportFileName', $project);
+        $this->assertEquals(
+                $projectConfig['storagePath'] . DIRECTORY_SEPARATOR . $projectConfig['xmlReportFileName'], 
+                $project->getXmlReportFilePath());
+        
+        $this->assertAttributeEquals($projectConfig['htmlReportFileName'], 'htmlReportFileName', $project);
+        $this->assertEquals(
+                $projectConfig['webPath'] . DIRECTORY_SEPARATOR . $projectConfig['htmlReportFileName'], 
+                $project->getHtmlReportFilePath());
     }
     
     public function testGetPathWillBeNormalize() {
         
         $project1 = ProjectModel::create(array(
             'name' => 'project 1',
-            'path' => '/path/to/project'
+            'storagePath' => '/path/to/project'
         ));
         $project2 = ProjectModel::create(array(
             'name' => 'project 1',
-            'path' => '/path/to/project/'
+            'storagePath' => '/path/to/project/'
         ));
         
-        $this->assertEquals('/path/to/project', $project1->getPath());
-        $this->assertEquals('/path/to/project', $project2->getPath());
+        $this->assertEquals('/path/to/project', $project1->getStoragePath());
+        $this->assertEquals('/path/to/project', $project2->getStoragePath());
     }
     
     public function testPopulateInfo() {
         
         $project = ProjectModel::create(array(
             'name' => 'project 1',
-            'path' => '/path/to/project'
+            'storagePath' => '/path/to/project'
         ));
         
         $lastRunDate = 123456789;

@@ -22,18 +22,14 @@ class Controller {
         
         $projects = array();
         
-        foreach ($config['projects'] as $projectName => $projectPath) {
-            $project = ProjectModel::create(array(
-                'name' => $projectName,
-                'path' => $projectPath,
-                'reportFileName' => $config['html-report-file-name']
-            ));
+        foreach ($config['projects'] as $projectConfig) {
+            $project = ProjectModel::create($projectConfig);
             
             if (!$validator->isValid($project)) {
                 return;
             }
             
-            $projectFetcher->fetchInfo($project, $project->getReportFilePath());
+            $projectFetcher->fetchInfo($project, $project->getXmlReportFilePath());
             
             $projects[] = $project;
         }
